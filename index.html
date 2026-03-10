@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --celda: 80px;
+            --foto-size: 130px;
+            --color-eje: #555;
+        }
+
+        body {
+            background-color: #fcfcfc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .contenedor-plano {
+            position: relative;
+            width: calc(var(--celda) * 10);
+            height: calc(var(--celda) * 10);
+            background-color: white;
+            background-image: 
+                linear-gradient(to right, #eee 1px, transparent 1px),
+                linear-gradient(to bottom, #eee 1px, transparent 1px);
+            background-size: var(--celda) var(--celda);
+            border: 2px solid #ddd;
+        }
+
+        .eje { position: absolute; background-color: var(--color-eje); z-index: 2; }
+        .eje-x { width: 106%; height: 3px; top: 50%; left: -3%; transform: translateY(-50%); }
+        .eje-y { width: 3px; height: 106%; left: 50%; top: -3%; transform: translateX(-50%); }
+
+        .foto {
+            position: absolute;
+            width: var(--foto-size);
+            height: auto;
+            z-index: 10;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            transform: translate(-50%, -50%);
+            border: 3px solid white;
+        }
+
+        .reproductor-pista {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, 10px); 
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        audio { width: 45px; height: 30px; }
+        .label-audio { font-size: 10px; font-weight: bold; color: #777; margin-top: 2px; }
+
+        /* Posiciones en el eje X */
+        .p1 { left: 5%; }   .p2 { left: 15%; }  .p3 { left: 25%; }  .p4 { left: 35%; }  .p5 { left: 45%; }
+        .p6 { left: 55%; }  .p7 { left: 65%; }  .p8 { left: 75%; }  .p9 { left: 85%; }  .p10 { left: 95%; }
+
+        /* Imágenes */
+        .img-gato { top: 30%; left: 90%; }
+        .img-contraparte { top: 70%; left: 10%; }
+        .img-arriba { top: 10%; left: 55%; }
+        .img-abajo { top: 90%; left: 55%; }
+    </style>
+</head>
+<body>
+
+<div class="contenedor-plano">
+    <div class="eje eje-x"></div>
+    <div class="eje eje-y"></div>
+
+    <div class="reproductor-pista p1"><audio class="pista" id="audio1" controls src="audio1.mp3"></audio><span class="label-audio">01</span></div>
+    <div class="reproductor-pista p2"><audio class="pista" id="audio2" controls src="audio2.mp3"></audio><span class="label-audio">02</span></div>
+    <div class="reproductor-pista p3"><audio class="pista" id="audio3" controls src="audio3.mp3"></audio><span class="label-audio">03</span></div>
+    <div class="reproductor-pista p4"><audio class="pista" id="audio4" controls src="audio4.mp3"></audio><span class="label-audio">04</span></div>
+    <div class="reproductor-pista p5"><audio class="pista" id="audio5" controls src="audio5.mp3"></audio><span class="label-audio">05</span></div>
+    
+    <div class="reproductor-pista p6"><audio class="pista" id="audio6" controls src="audio6.mp3"></audio><span class="label-audio">06</span></div>
+    <div class="reproductor-pista p7"><audio class="pista" id="audio7" controls src="audio7.mp3"></audio><span class="label-audio">07</span></div>
+    <div class="reproductor-pista p8"><audio class="pista" id="audio8" controls src="audio8.mp3"></audio><span class="label-audio">08</span></div>
+    <div class="reproductor-pista p9"><audio class="pista" id="audio9" controls src="audio9.mp3"></audio><span class="label-audio">09</span></div>
+    <div class="reproductor-pista p10"><audio class="pista" id="audio10" controls src="audio10.mp3"></audio><span class="label-audio">10</span></div>
+
+    <img src="gato.jpg" class="foto img-gato" alt="Gato">
+    <img src="gato_opuesto.jpg" class="foto img-contraparte" alt="Opuesto">
+    <img src="persona1.jpg" class="foto img-arriba" alt="Arriba">
+    <img src="persona2.jpg" class="foto img-abajo" alt="Abajo">
+</div>
+
+<script>
+    const audios = document.querySelectorAll('.pista');
+    const audio5 = document.getElementById('audio5');
+
+    // 1. BAJAR EL VOLUMEN AL AUDIO 5 (0.3 es el 30%)
+    audio5.volume = 0.3;
+
+    audios.forEach((audio, index) => {
+        audio.addEventListener('ended', () => {
+            const siguiente = audios[index + 1];
+            
+            if (siguiente) {
+                // 2. TIEMPO DE ESPERA ENTRE EL 5 Y EL 6
+                if (audio.id === 'audio5') {
+                    console.log("Silencio en el origen... esperando 3 segundos.");
+                    setTimeout(() => {
+                        siguiente.play();
+                    }, 3000); // 3000 milisegundos = 3 segundos
+                } else {
+                    // Reproducción continua normal para los demás
+                    siguiente.play();
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
