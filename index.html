@@ -45,6 +45,21 @@
             border: 3px solid white;
         }
 
+        /* --- BLOQUES DE TEXTO NUEVOS --- */
+        .bloque-texto {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 15;
+            transform: translate(-50%, -50%);
+        }
+
+        .txt-calido { top: 30%; left: 75%; color: #e67e22; } /* Al lado del gato */
+        .txt-frio { top: 70%; left: 25%; color: #2980b9; }   /* Al lado de la contraparte */
+
         .reproductor-pista {
             position: absolute;
             top: 50%;
@@ -74,6 +89,9 @@
 <div class="contenedor-plano">
     <div class="eje eje-x"></div>
     <div class="eje eje-y"></div>
+
+    <div class="bloque-texto txt-calido">Texto Cálido</div>
+    <div class="bloque-texto txt-frio">Texto Frío</div>
 
     <div class="reproductor-pista p1"><audio class="pista" id="audio1" controls src="audio1.mp3"></audio><span class="label-audio">01</span></div>
     <div class="reproductor-pista p2"><audio class="pista" id="audio2" controls src="audio2.mp3"></audio><span class="label-audio">02</span></div>
